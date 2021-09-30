@@ -1,6 +1,8 @@
 package com.beok.mockwebserversample
 
 import com.squareup.moshi.Moshi
+import junit.framework.Assert.assertEquals
+import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.assertj.core.api.Assertions.assertThat
@@ -33,17 +35,14 @@ class FooServiceTest {
     }
 
     @Test
-    fun `foo 요청`() {
+    fun `foo 요청`() = runBlocking {
         val response = MockResponse()
             .setBody(File("src/test/resources/foo.json").readText())
         server.enqueue(response = response)
 
-        val actual = service
-            .getFoo()
-            .execute()
-            .body()
+        val actual = service.getFoo()
 
         val expected = Foo(foo = 1, bar = "baz", isFoo = true)
-        assertThat(actual).isEqualTo(expected)
+        assertEquals(actual, expected)
     }
 }
