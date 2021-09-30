@@ -38,6 +38,7 @@ class FooServiceTest {
     fun `foo 요청`() = runBlocking {
         val response = MockResponse()
             .setBody(File("src/test/resources/foo.json").readText())
+            .setResponseCode(200)
         server.enqueue(response = response)
 
         val actual = service.getFoo()
