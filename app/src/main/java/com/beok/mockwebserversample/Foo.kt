@@ -11,6 +11,6 @@ data class Foo(
     @Json(name = "bar")
     val bar: String,
 
-    @Json(name = "isFoo") // Error occur
+    @Json(name = "is_foo")
     val isFoo: Boolean
 )
